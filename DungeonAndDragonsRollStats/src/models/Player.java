@@ -1,6 +1,7 @@
 package models;
 
 import java.util.Map;
+import java.util.Map.Entry;
 
 import enums.CharacterClass;
 import enums.CharacterRace;
@@ -11,7 +12,6 @@ public class Player {
 	private final String playerName;
 	private final String characterName;
 	private int startingLevel;
-	private int maxHitDiceSize;
 	private final Map<String, Integer> abilityStats;
 	
 	public CharacterClass getCharacterClass() {
@@ -34,10 +34,6 @@ public class Player {
 		return this.startingLevel;
 	}
 	
-	public int getMaxHitDiceSize() {
-		return this.maxHitDiceSize;
-	}
-	
 	public Map<String, Integer> getAbilityStats() {
 		return this.abilityStats;
 	}
@@ -48,24 +44,21 @@ public class Player {
 			String playerName,
 			String characterName,
 			int startingLevel,
-			int maxHitDiceSize,
 			Map<String, Integer> abilityStats) {
 		this.characterClass = characterClass;
 		this.characterRace = characterRace;
 		this.playerName = playerName;
 		this.characterName = characterName;
 		this.startingLevel = startingLevel;
-		this.maxHitDiceSize = maxHitDiceSize;
 		this.abilityStats = abilityStats;
 	}
 	
-	public class PlayerBuilder {
+	public static class PlayerBuilder {
 		private CharacterClass characterClass;
 		private CharacterRace characterRace;
 		private String playerName;
 		private String characterName;
 		private int startingLevel;
-		private int maxHitDiceSize;
 		private Map<String, Integer> abilityStats;
 		
 		public PlayerBuilder setCharacterClass(CharacterClass characterClass) {
@@ -93,18 +86,32 @@ public class Player {
 			return this;
 		}
 		
-		public PlayerBuilder setMaxhitDiceSize(int maxhitDiceSize) {
-			this.maxHitDiceSize = maxhitDiceSize;
-			return this;
-		}
-		
 		public PlayerBuilder setAbilityStats(Map<String, Integer> abilityStats) {
 			this.abilityStats = abilityStats;
 			return this;
 		}
 		
 		public Player build() {
-			return new Player(characterClass, characterRace, playerName, characterName, startingLevel, maxHitDiceSize, abilityStats);
+			return new Player(characterClass, characterRace, playerName, characterName, startingLevel, abilityStats);
 		}
+	}
+	
+	@Override
+	public String toString() {
+		StringBuilder s = new StringBuilder();
+		
+		s.append("=== DND Character Entry ===\n");
+		s.append(String.format("Player Name: %s\n", this.getPlayerName()));
+		s.append(String.format("Character Name: %s\n", this.getCharacterName()));
+		s.append(String.format("Character Race: %s\n", this.getCharacterRace()));
+		s.append(String.format("Character Class: %s\n", this.getCharacterClass()));
+		s.append(String.format("Starting Level: %d\n", this.getStartingLevel()));
+		s.append("Ability Stats: \n");
+		
+		for (Entry<String, Integer> abilityKeySet: this.getAbilityStats().entrySet()) {
+			s.append(String.format("%s = %d\n", abilityKeySet.getKey(), abilityKeySet.getValue()));
+		}
+		
+		return s.toString();
 	}
 }
