@@ -38,6 +38,9 @@ public class Player {
 		return this.maxHitDiceSize;
 	}
 	
+	public Map<String, Integer> getAbilityStats() {
+		return this.abilityStats;
+	}
 	
 	private Player(
 			CharacterClass characterClass, 
@@ -54,17 +57,6 @@ public class Player {
 		this.startingLevel = startingLevel;
 		this.maxHitDiceSize = maxHitDiceSize;
 		this.abilityStats = abilityStats;
-	}
-	
-	public static Player of(
-			CharacterClass characterClass, 
-			CharacterRace characterRace,
-			String playerName,
-			String characterName,
-			int startingLevel,
-			int maxHitDiceSize,
-			Map<String, Integer> abilityStats) {
-		return new Player(characterClass, characterRace, playerName, characterName, startingLevel, maxHitDiceSize, abilityStats);
 	}
 	
 	public class PlayerBuilder {
@@ -106,13 +98,13 @@ public class Player {
 			return this;
 		}
 		
-		public PlayerBuilder setAbilityStats(Map<String, Integer> abilityState) {
+		public PlayerBuilder setAbilityStats(Map<String, Integer> abilityStats) {
 			this.abilityStats = abilityStats;
 			return this;
 		}
 		
 		public Player build() {
-			return Player.of(characterClass, characterRace, playerName, characterName, startingLevel, maxHitDiceSize, abilityStats);
+			return new Player(characterClass, characterRace, playerName, characterName, startingLevel, maxHitDiceSize, abilityStats);
 		}
 	}
 }
