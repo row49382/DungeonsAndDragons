@@ -12,7 +12,7 @@ import main.services.DiceSumService;
 import test.services.factories.DiceRollerServiceFactory;
 import test.services.factories.DiceSumServiceFactory;
 
-class TestDiceSumService {
+public class TestDiceSumService {
 
 	@Test
 	void testSumRolls() throws Exception {
