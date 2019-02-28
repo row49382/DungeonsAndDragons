@@ -1,4 +1,4 @@
-package app;
+package main.app;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,24 +10,30 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
-import enums.Ability;
-import enums.CharacterClass;
-import enums.CharacterRace;
-import models.Player;
-import models.Player.PlayerBuilder;
+import main.enums.Ability;
+import main.enums.CharacterClass;
+import main.enums.CharacterRace;
+import main.enums.DiceFaceCount;
+import main.models.Player;
+import main.models.Player.PlayerBuilder;
+import main.services.DiceRollerService;
+import main.services.DiceRollerServiceImpl;
+import main.services.DiceSumService;
+import main.services.DiceSumServiceImpl;
 
 public class Driver {
 
 	private static final int STAT_ROLL_DICE_COUNT = 4;
-	private static final int STAT_ROLL_DICE_NUNBER_OF_SIDES = 6;
 	
 	public static void main(String[] args) {
 		Scanner input = new Scanner(System.in);
-		Map<String, Integer> statMap = createAbilityStatMap();
+		Map<String, Integer> abilityStatMap = createAbilityStatMap();
+		DiceRollerService diceRoller = new DiceRollerServiceImpl();
+		DiceSumService diceSummer = new DiceSumServiceImpl();
 		PlayerBuilder newPlayerBuilder = new PlayerBuilder();
 		
 		printMenu();
-		List<Integer> diceRollSums = getDiceRollSums(statMap);
+		List<Integer> diceRollSums = getDiceRollSums(abilityStatMap, diceRoller, diceSummer);
 		
 		Player player = newPlayerBuilder
 				.setPlayerName(populatePlayerName(input))
@@ -35,7 +41,7 @@ public class Driver {
 				.setCharacterClass(populateCharacterClass(input))
 				.setCharacterRace(populateCharacterRace(input))
 				.setStartingLevel(populateStartingLevel(input))
-				.setAbilityStats(populateAbilityStatMap(input, statMap, diceRollSums))
+				.setAbilityStats(populateAbilityStatMap(input, abilityStatMap, diceRollSums))
 				.build();
 		
 		System.out.println("The following player was created: ");
@@ -105,25 +111,42 @@ public class Driver {
 		return scanner.nextLine();
 	}
 
-	private static List<Integer> getDiceRollSums(Map<String, Integer> statMap) {
+	private static List<Integer> getDiceRollSums(
+			Map<String, Integer> statMap, 
+			DiceRollerService diceRoller, 
+			DiceSumService diceSummer) {
 		List<Integer> diceRollSums = new ArrayList<>(statMap.keySet().size() + 1);
 		
 		for (int setRoll = 0; setRoll < statMap.keySet().size() + 1; setRoll++) {
-			diceRollSums.add((rollDiceForAbilityStats().stream().reduce(0, (x, y) -> x + y)));
+			List<Integer> diceRolls = null;
+			
+			// catches case if the number of dice rolled is negative
+			while (diceRolls == null) {
+				try {
+					diceRolls = diceRoller.rollDice(STAT_ROLL_DICE_COUNT, DiceFaceCount.SixSidedDice, true);
+				}
+				catch (Exception e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			
+			diceRollSums.add(diceSummer.sumDiceRolls(diceRolls));
 		}
-		
-		int lowestSumRoll = getLowestRoll(diceRollSums);
-		diceRollSums.remove(diceRollSums.indexOf(lowestSumRoll));
+
+		diceRollSums = diceRoller.removeLowestRoll(diceRollSums);
 		
 		System.out.println("Here are your rolls:");
 		for (int i = 0; i < diceRollSums.size(); i++) {
-			System.out.printf("%d) %d \n", i + 1, diceRollSums.get(i));
+			System.out.printf("%d \n", diceRollSums.get(i));
 		}
 		
 		return diceRollSums; 
 	}
 	
-	private static Map<String, Integer> populateAbilityStatMap(Scanner scanner, Map<String, Integer> statMap, List<Integer> diceRollSums) {
+	private static Map<String, Integer> populateAbilityStatMap(
+			Scanner scanner, 
+			Map<String, Integer> statMap, 
+			List<Integer> diceRollSums) {
 		
 		Map<String, Integer> emptyMapAbilityStats = getEmptyMapEntries(statMap);
 		
@@ -142,7 +165,7 @@ public class Driver {
 				System.out.printf("Enter value for ability %s \n", abilityOption);
 				System.out.println("The remaining values are:");
 				for (int sumRoll: diceRollSums) {
-					System.out.printf("- %s\n", sumRoll);
+					System.out.printf("%s\n", sumRoll);
 				}
 				
 				int diceRoll = -1;
@@ -176,31 +199,8 @@ public class Driver {
 		return statMap;
 	}
 	
-	private static List<Integer> rollDiceForAbilityStats() { 
-		List<Integer> diceRolls = new ArrayList<>();
-		Random randomRoll = new Random();
-		
-		for (int rolls = 0; rolls < STAT_ROLL_DICE_COUNT; rolls++) {
-			diceRolls.add(randomRoll.nextInt(STAT_ROLL_DICE_NUNBER_OF_SIDES) + 1);
-		}
-		
-		int lowestRoll = getLowestRoll(diceRolls);
-		
-		diceRolls.remove(diceRolls.indexOf(lowestRoll));
-		return diceRolls;
-	}
-	
 	private static void printMenu() {
 		System.out.println("=== Dungeons and Dragons Dice Rolls ===");
-	}
-	
-	private static int getLowestRoll(List<Integer> diceRolls) {
-		int lowestRoll = diceRolls
-				.stream()
-				.reduce(diceRolls.stream().findFirst().get(), 
-						(x, y) -> x > y ? y : x);
-		
-		return lowestRoll;
 	}
 	
 	private static Map<String, Integer> getEmptyMapEntries(Map<String, Integer> map) {

@@ -1,10 +1,10 @@
-package models;
+package main.models;
 
 import java.util.Map;
 import java.util.Map.Entry;
 
-import enums.CharacterClass;
-import enums.CharacterRace;
+import main.enums.CharacterClass;
+import main.enums.CharacterRace;
 
 public class Player {
 	private final CharacterClass characterClass;
