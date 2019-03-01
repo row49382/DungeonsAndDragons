@@ -31,4 +31,23 @@ public class DiceRollerServiceImpl implements DiceRollerService {
 		return diceRolls;
 	}
 
+	@Override
+	public List<Integer> rollAdvantageOrDisadvantage(boolean hasAdvantage) throws Exception {
+		List<Integer> specialDiceRolls = new ArrayList<>();
+		try {
+			if (!hasAdvantage) {
+				specialDiceRolls = this.rollDice(2, DiceFaceCount.TwentySidedDice, false);
+				specialDiceRolls = this.removeHighestRoll(specialDiceRolls);
+			}
+			else {
+				specialDiceRolls = this.rollDice(2, DiceFaceCount.TwentySidedDice, true);
+			}
+		}
+		catch (Exception e) {
+			throw e;
+		}
+		
+		return specialDiceRolls;
+	}
+
 }
