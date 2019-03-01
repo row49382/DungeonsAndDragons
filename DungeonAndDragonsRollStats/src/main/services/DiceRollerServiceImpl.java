@@ -50,4 +50,16 @@ public class DiceRollerServiceImpl implements DiceRollerService {
 		return specialDiceRolls;
 	}
 
+	@Override
+	public List<Integer> rollPercentileDice() {
+		List<Integer> percentileRolls = new ArrayList<>();
+		
+		for (int rollCounter = 0; rollCounter < 2; rollCounter++) {
+			percentileRolls.add(this.randomRoller.nextInt(9));
+		}
+		
+		return percentileRolls;
+	}
+	
+
 }

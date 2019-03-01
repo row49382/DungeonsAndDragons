@@ -95,6 +95,23 @@ public class DiceRollerServiceTest {
 		
 	}
 	
+	@Test
+	public void testPercentileDiceRollValueRange() {
+		DiceRollerService diceRoller = DiceRollerServiceFactory.createDiceRoller();
+		List<Integer> rolls = diceRoller.rollPercentileDice();
+		
+		assertTrue(rolls.stream().allMatch(x -> x >= 0 && x < 10), 
+				"Values for percentile roll were not in range 0 - 9");
+	}
+	
+	@Test
+	public void testPercentileDiceRollCount() {
+		DiceRollerService diceRoller = DiceRollerServiceFactory.createDiceRoller();
+		List<Integer> rolls = diceRoller.rollPercentileDice();
+		
+		assertTrue(rolls.size() == 2);
+	}
+	
 	private int getLowestRoll(List<Integer> rolls) {
 		return rolls
 				.stream()

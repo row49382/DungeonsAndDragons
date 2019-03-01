@@ -8,6 +8,7 @@ import main.enums.DiceFaceCount;
 public interface DiceRollerService {
 	List<Integer> rollDice(int numberOfDice, DiceFaceCount faceCount, boolean removeLowest) throws Exception;
 	List<Integer> rollAdvantageOrDisadvantage(boolean hasAdvantage) throws Exception;
+	List<Integer> rollPercentileDice();
 	
 	default List<Integer> removeLowestRoll(List<Integer> rolls) {
 		int lowestRoll = rolls
