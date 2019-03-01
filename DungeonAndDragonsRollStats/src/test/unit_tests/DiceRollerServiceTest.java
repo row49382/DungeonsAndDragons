@@ -11,7 +11,7 @@ import main.enums.DiceFaceCount;
 import main.services.DiceRollerService;
 import test.services.factories.DiceRollerServiceFactory;
 
-public class TestDiceRollerService {
+public class DiceRollerServiceTest {
 
 	@Test
 	public void testFourFaceDieRoll() throws Exception {
@@ -28,7 +28,7 @@ public class TestDiceRollerService {
 		List<Integer> rolls = diceRoller.rollDice(1, DiceFaceCount.SixSidedDice, false);
 		
 		assertTrue(rolls.stream().allMatch(x -> x > 0 && x <= DiceFaceCount.SixSidedDice.getFaceCount()), 
-				String.format("Values of four sided dice were not between 1 and %d", DiceFaceCount.SixSidedDice.getFaceCount()));
+				String.format("Values of six sided dice were not between 1 and %d", DiceFaceCount.SixSidedDice.getFaceCount()));
 	}
 	
 	@Test
@@ -37,7 +37,7 @@ public class TestDiceRollerService {
 		List<Integer> rolls = diceRoller.rollDice(1, DiceFaceCount.EightSidedDice, false);
 		
 		assertTrue(rolls.stream().allMatch(x -> x > 0 && x <= DiceFaceCount.EightSidedDice.getFaceCount()), 
-				String.format("Values of four sided dice were not between 1 and %d", DiceFaceCount.EightSidedDice.getFaceCount()));
+				String.format("Values of eight sided dice were not between 1 and %d", DiceFaceCount.EightSidedDice.getFaceCount()));
 	}
 	
 	@Test
@@ -46,7 +46,7 @@ public class TestDiceRollerService {
 		List<Integer> rolls = diceRoller.rollDice(1, DiceFaceCount.TenSidedDice, false);
 		
 		assertTrue(rolls.stream().allMatch(x -> x > 0 && x <= DiceFaceCount.TenSidedDice.getFaceCount()), 
-				String.format("Values of four sided dice were not between 1 and %d", DiceFaceCount.TenSidedDice.getFaceCount()));
+				String.format("Values of ten sided dice were not between 1 and %d", DiceFaceCount.TenSidedDice.getFaceCount()));
 	}
 	
 	@Test
@@ -55,7 +55,7 @@ public class TestDiceRollerService {
 		List<Integer> rolls = diceRoller.rollDice(1, DiceFaceCount.TwentySidedDice, false);
 		
 		assertTrue(rolls.stream().allMatch(x -> x > 0 && x <= DiceFaceCount.TwentySidedDice.getFaceCount()), 
-				String.format("Values of four sided dice were not between 1 and %d", DiceFaceCount.TwentySidedDice.getFaceCount()));
+				String.format("Values of twenty sided dice were not between 1 and %d", DiceFaceCount.TwentySidedDice.getFaceCount()));
 	}
 	
 	@Test
