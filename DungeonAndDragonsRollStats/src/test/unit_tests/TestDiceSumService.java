@@ -33,7 +33,6 @@ public class TestDiceSumService {
 	
 	@Test
 	public void testPercentileSum() {
-		DiceRollerService diceRoller = DiceRollerServiceFactory.createDiceRoller();
 		DiceSumService diceSummer = DiceSumServiceFactory.createDiceSummer();
 		
 		List<Integer> rolls = Arrays.asList(2, 7);
@@ -45,7 +44,6 @@ public class TestDiceSumService {
 	
 	@Test
 	public void testPercentileSumDoubleZero() {
-		DiceRollerService diceRoller = DiceRollerServiceFactory.createDiceRoller();
 		DiceSumService diceSummer = DiceSumServiceFactory.createDiceSummer();
 		
 		List<Integer> rolls = Arrays.asList(0, 0);
