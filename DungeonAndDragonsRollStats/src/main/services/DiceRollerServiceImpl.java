@@ -19,35 +19,14 @@ public class DiceRollerServiceImpl implements DiceRollerService {
 			throw new Exception("number of dice to roll can not be negative.");
 		}
 		
-		List<Integer> diceRolls = new ArrayList<>();
-		for (int rollCounter = 0; rollCounter < numberOfDice; rollCounter++) {
-			diceRolls.add(this.randomRoller.nextInt(faceCount.getFaceCount()) + 1);
-		}
-		
-		if (removeLowest) {
-			diceRolls = this.removeLowestRoll(diceRolls);
-		}
-		
-		return diceRolls;
+		List<Integer> diceRolls = this.rollDice(numberOfDice, faceCount);
+		return removeLowest ? this.removeLowestRoll(diceRolls) : diceRolls;
 	}
 
 	@Override
-	public List<Integer> rollAdvantageOrDisadvantage(boolean hasAdvantage) throws Exception {
-		List<Integer> specialDiceRolls = new ArrayList<>();
-		try {
-			if (!hasAdvantage) {
-				specialDiceRolls = this.rollDice(2, DiceFaceCount.TwentySidedDice, false);
-				specialDiceRolls = this.removeHighestRoll(specialDiceRolls);
-			}
-			else {
-				specialDiceRolls = this.rollDice(2, DiceFaceCount.TwentySidedDice, true);
-			}
-		}
-		catch (Exception e) {
-			throw e;
-		}
-		
-		return specialDiceRolls;
+	public List<Integer> rollAdvantageOrDisadvantage(boolean hasAdvantage) {
+		List<Integer> specialDiceRolls = this.rollDice(2, DiceFaceCount.TwentySidedDice);
+		return hasAdvantage ? this.removeLowestRoll(specialDiceRolls) : this.removeHighestRoll(specialDiceRolls);
 	}
 
 	@Override
@@ -59,6 +38,18 @@ public class DiceRollerServiceImpl implements DiceRollerService {
 		}
 		
 		return percentileRolls;
+	}
+	
+	/*
+	 * Rolls the specified sided dice, the specified number of times
+	 */
+	private List<Integer> rollDice(int numberOfDice, DiceFaceCount faceCount) {
+		List<Integer> diceRolls = new ArrayList<>();
+		for (int rollCounter = 0; rollCounter < numberOfDice; rollCounter++) {
+			diceRolls.add(this.randomRoller.nextInt(faceCount.getFaceCount()) + 1);
+		}
+		
+		return diceRolls;
 	}
 	
 
