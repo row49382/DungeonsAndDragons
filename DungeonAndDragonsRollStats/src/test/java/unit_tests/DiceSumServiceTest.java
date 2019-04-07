@@ -1,4 +1,4 @@
-package test.unit_tests;
+package unit_tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,13 +7,13 @@ import java.util.List;
 
 import org.junit.jupiter.api.Test;
 
-import main.enums.DiceFaceCount;
-import main.services.DiceRollerService;
-import main.services.DiceSumService;
-import test.services.factories.DiceRollerServiceFactory;
-import test.services.factories.DiceSumServiceFactory;
+import enums.DiceFaceCount;
+import services.DiceRollerService;
+import services.DiceSumService;
+import services.factories.DiceRollerServiceFactory;
+import services.factories.DiceSumServiceFactory;
 
-public class TestDiceSumService {
+public class DiceSumServiceTest {
 
 	@Test
 	public void testSumRolls() throws Exception {

@@ -1,10 +1,10 @@
-package test.unit_tests;
+package unit_tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 
-import main.enums.DiceFaceCount;
+import enums.DiceFaceCount;
 
 public class DiceFaceCountTest {
 

@@ -1,10 +1,10 @@
-package main.services;
+package services;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import main.enums.DiceFaceCount;
+import enums.DiceFaceCount;
 
 public class DiceRollerServiceImpl implements DiceRollerService {
 	private Random randomRoller;

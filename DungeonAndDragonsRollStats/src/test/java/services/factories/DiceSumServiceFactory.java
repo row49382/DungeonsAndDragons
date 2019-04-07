@@ -1,7 +1,7 @@
-package test.services.factories;
+package services.factories;
 
-import main.services.DiceSumService;
-import main.services.DiceSumServiceImpl;
+import services.DiceSumService;
+import services.DiceSumServiceImpl;
 
 public class DiceSumServiceFactory {
 	public static DiceSumService createDiceSummer() {

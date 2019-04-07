@@ -1,7 +1,7 @@
-package test.services.factories;
+package services.factories;
 
-import main.services.DiceRollerService;
-import main.services.DiceRollerServiceImpl;
+import services.DiceRollerService;
+import services.DiceRollerServiceImpl;
 
 public class DiceRollerServiceFactory {
 	public static DiceRollerService createDiceRoller() {

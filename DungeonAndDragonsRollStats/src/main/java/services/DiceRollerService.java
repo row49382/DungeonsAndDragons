@@ -1,9 +1,8 @@
-package main.services;
+package services;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import main.enums.DiceFaceCount;
+import enums.DiceFaceCount;
 
 public interface DiceRollerService {
 	List<Integer> rollDice(int numberOfDice, DiceFaceCount faceCount, boolean removeLowest) throws Exception;
@@ -13,8 +12,8 @@ public interface DiceRollerService {
 	default List<Integer> removeLowestRoll(List<Integer> rolls) {
 		int lowestRoll = rolls
 				.stream()
-				.reduce(rolls.get(0), 
-						(x, y) -> x > y ? y : x);
+				.min((x, y) -> x.compareTo(y))
+				.get();
 		
 		rolls.remove(rolls.indexOf(lowestRoll));
 		return rolls;
@@ -23,8 +22,8 @@ public interface DiceRollerService {
 	default List<Integer> removeHighestRoll(List<Integer> rolls) {
 		int highestRoll = rolls
 				.stream()
-				.reduce(rolls.get(0), 
-						(x, y) -> x < y ? y : x);
+				.max((x, y) -> x.compareTo(y))
+				.get();
 		
 		rolls.remove(rolls.indexOf(highestRoll));
 		return rolls;

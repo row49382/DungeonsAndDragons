@@ -1,4 +1,4 @@
-package test.unit_tests;
+package unit_tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -7,9 +7,9 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import main.enums.DiceFaceCount;
-import main.services.DiceRollerService;
-import test.services.factories.DiceRollerServiceFactory;
+import enums.DiceFaceCount;
+import services.DiceRollerService;
+import services.factories.DiceRollerServiceFactory;
 
 public class DiceRollerServiceTest {
 
@@ -115,7 +115,8 @@ public class DiceRollerServiceTest {
 	private int getLowestRoll(List<Integer> rolls) {
 		return rolls
 				.stream()
-				.reduce(rolls.get(0), (x, y) -> x > y ? y : x);
+				.min((x, y) -> x.compareTo(y))
+				.get();
 	}
 	
 	private int countIf(List<Integer> rolls, Predicate<? super Integer> predicate) {
