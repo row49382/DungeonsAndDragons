@@ -25,6 +25,8 @@ import services.commands.PopulateAbilityStats;
 import services.commands.PopulateCharacterClass;
 import services.commands.PopulateCharacterName;
 import services.commands.PopulateCharacterRace;
+import services.commands.PopulateCharacterSubClass;
+import services.commands.PopulateCharacterSubRace;
 import services.commands.PopulatePlayerName;
 import services.commands.PopulateStartingLevel;
 
@@ -38,13 +40,14 @@ public class Driver {
 		DiceSumService diceSummer = new DiceSumServiceImpl();
 		List<Integer> diceRollSums = getDiceRollSums(diceRoller, diceSummer);
 		
-		// review order to make logical sense
 		List<PlayerBuilderCommands> commandList = new ArrayList<>();
 		commandList.add(new PopulatePlayerName());
 		commandList.add(new PopulateCharacterName());
 		commandList.add(new PopulateStartingLevel());
 		commandList.add(new PopulateCharacterClass());
+		commandList.add(new PopulateCharacterSubClass());
 		commandList.add(new PopulateCharacterRace());
+		commandList.add(new PopulateCharacterSubRace());
 		commandList.add(new PopulateAbilityStats(diceRollSums));
 		
 		Invoker invoker = new Invoker(commandList, diceRollSums);

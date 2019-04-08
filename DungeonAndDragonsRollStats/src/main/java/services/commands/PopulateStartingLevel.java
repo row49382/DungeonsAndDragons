@@ -10,10 +10,11 @@ public class PopulateStartingLevel implements PlayerBuilderCommands {
 
 	@Override
 	public PlayerBuilder setItem(PlayerBuilder playerBuilder, Scanner scanner) {
-		System.out.print("Enter in the character's starting level: ");
 		int startingLevel = -1;
 
 		while (startingLevel == - 1) {
+			System.out.print("Enter in the character's starting level: ");
+
 			try {
 				startingLevel = scanner.nextInt();
 				scanner.nextLine();

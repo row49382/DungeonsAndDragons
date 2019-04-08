@@ -1,9 +1,11 @@
 package enums;
 
-enum CharacterSubRace {
+public enum CharacterSubRace {
+	// dwarf
 	HillDwarf,
 	MountainDwarf,
 	DuergarDwarf,
+	// elf
 	HighElf,
 	WoodElf,
 	DrowElf,
@@ -15,23 +17,31 @@ enum CharacterSubRace {
 			return "Shadar-Kai Elf";
 		}
 	},
+	// gnome
 	ForestGnome,
 	RockGnome,
 	SvirfneblinGnome,
+	// aasimar
 	ProtectorAasimar,
 	ScourgeAasimar,
 	FallenAasimar,
+	// mousefolk
 	MeadowguardMouseFolk,
 	SoftpawMouseFolk,
+	// halfling
 	LightfootHalfling,
 	StoutHalfling,
 	GhostwiseHalfling,
+	// aarakocra
 	AirAarakocra,
 	EarthAarakocra,
 	FireAarakocra,
 	WaterAarakocra,
 	Regular,
+	// genesi
+	AirGenesi,
+	EarthGenesi,
+	FireGenesi,
+	WaterGenesi,
 	Variant
-	
-	
 }

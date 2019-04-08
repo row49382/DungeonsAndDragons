@@ -76,7 +76,11 @@ public enum CharacterRace {
 			CharacterSubRace.EarthAarakocra,
 			CharacterSubRace.FireAarakocra,
 			CharacterSubRace.WaterAarakocra)),
-	Genasi(Arrays.asList()),
+	Genasi(Arrays.asList(
+			CharacterSubRace.AirGenesi,
+			CharacterSubRace.EarthGenesi,
+			CharacterSubRace.FireGenesi,
+			CharacterSubRace.WaterGenesi)),
 	Goliath(Arrays.asList());
 	
 	private List<CharacterSubRace> subRaces;
