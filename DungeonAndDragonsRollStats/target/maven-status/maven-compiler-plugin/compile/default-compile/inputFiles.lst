@@ -15,6 +15,8 @@ C:\Users\robertw\source\Java_Projects\DND\DungeonsAndDragons\DungeonAndDragonsRo
 C:\Users\robertw\source\Java_Projects\DND\DungeonsAndDragons\DungeonAndDragonsRollStats\src\main\java\enums\CharacterClass.java
 C:\Users\robertw\source\Java_Projects\DND\DungeonsAndDragons\DungeonAndDragonsRollStats\src\main\java\enums\CharacterRace.java
 C:\Users\robertw\source\Java_Projects\DND\DungeonsAndDragons\DungeonAndDragonsRollStats\src\main\java\services\DiceRollerService.java
+C:\Users\robertw\source\Java_Projects\DND\DungeonsAndDragons\DungeonAndDragonsRollStats\src\main\java\services\commands\PopulateCharacterSubClass.java
+C:\Users\robertw\source\Java_Projects\DND\DungeonsAndDragons\DungeonAndDragonsRollStats\src\main\java\services\commands\PopulateCharacterSubRace.java
 C:\Users\robertw\source\Java_Projects\DND\DungeonsAndDragons\DungeonAndDragonsRollStats\src\main\java\services\DiceRollerServiceImpl.java
 C:\Users\robertw\source\Java_Projects\DND\DungeonsAndDragons\DungeonAndDragonsRollStats\src\main\java\app\Invoker.java
 C:\Users\robertw\source\Java_Projects\DND\DungeonsAndDragons\DungeonAndDragonsRollStats\src\main\java\enums\CharacterSubRace.java

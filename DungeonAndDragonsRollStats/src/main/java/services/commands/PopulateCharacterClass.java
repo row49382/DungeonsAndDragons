@@ -11,10 +11,10 @@ public class PopulateCharacterClass implements PlayerBuilderCommands {
 
 	@Override
 	public PlayerBuilder setItem(PlayerBuilder playerBuilder, Scanner scanner) {
-		System.out.print("Enter in the character's class: ");
 		CharacterClass charClass = null;
 
 		while (charClass == null) {
+			System.out.print("Enter in the character's class: ");
 			final String charClassString =  scanner.next();
 
 			if (Arrays.asList(CharacterClass.values()).stream().anyMatch(x -> x.toString().equals(charClassString))) {

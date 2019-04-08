@@ -26,21 +26,36 @@ public class PopulateAbilityStats implements PlayerBuilderCommands {
 
 		while (emptyMapAbilityStats.entrySet().size() > 0) {
 
+			if (emptyMapAbilityStats.size() == 1) {
+				int lastDiceRoll = diceRollSums.get(0);
+				String lastAbility = emptyMapAbilityStats.keySet().stream().findFirst().get();
+				
+				this.populateLastValueSilently(statMap, lastAbility, lastDiceRoll);
+				emptyMapAbilityStats = getEmptyMapEntries(statMap);
+				
+				continue;
+			}
+			
 			System.out.println("Enter the ability you want to add a value to");
 			System.out.println("The following abilities without values are:");
 
 			for (String ability: emptyMapAbilityStats.keySet()) {
-				System.out.printf("%s\n", ability);
+				System.out.printf("- %s\n", ability);
 			}
+			
+			System.out.print("Enter one of the abilities above: ");
 
 			String abilityOption = scanner.next();
 
-			if (statMap.keySet().stream().anyMatch(x -> x.equals(abilityOption))) {
+			if (statMap.keySet().stream().anyMatch(x -> x.equalsIgnoreCase(abilityOption))) {
 				System.out.printf("Enter value for ability %s \n", abilityOption);
 				System.out.println("The remaining values are:");
+				
 				for (int sumRoll: diceRollSums) {
-					System.out.printf("%s\n", sumRoll);
+					System.out.printf("- %s\n", sumRoll);
 				}
+				
+				System.out.print("Enter one of the values above: ");
 
 				int diceRoll = -1;
 
@@ -91,5 +106,10 @@ public class PopulateAbilityStats implements PlayerBuilderCommands {
 				.stream()
 				.filter(x -> x.getValue() == 0)
 				.collect(Collectors.toMap(x -> x.getKey(), x -> x.getValue()));
+	}
+	
+	private Map<String, Integer> populateLastValueSilently(Map<String, Integer> statMap, String lastAbilityKey, int lastDiceRoll) {
+		statMap.put(lastAbilityKey, lastDiceRoll);
+		return statMap;
 	}
 }

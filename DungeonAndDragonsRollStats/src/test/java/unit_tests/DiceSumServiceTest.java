@@ -24,7 +24,8 @@ public class DiceSumServiceTest {
 		int rollsSumFromDiceSummer = diceSummer.sumDiceRolls(rolls);
 		
 		int rollsSum = rolls.stream().reduce(0, (x, y) -> x + y);
-		assertTrue(rollsSumFromDiceSummer == rollsSum, 
+		assertTrue(
+				rollsSumFromDiceSummer == rollsSum, 
 				String.format(
 						"rolls sum service did not sum the dice rolls correctly. \nService sum was %d while derived sum was %d",
 						rollsSumFromDiceSummer,
@@ -39,7 +40,6 @@ public class DiceSumServiceTest {
 		int percentileSum = diceSummer.sumPercentileDiceRolls(rolls);
 		
 		assertTrue(percentileSum == 72);
-		
 	}
 	
 	@Test
