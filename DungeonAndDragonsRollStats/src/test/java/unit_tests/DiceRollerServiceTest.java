@@ -2,8 +2,8 @@ package unit_tests;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import java.util.Arrays;
 import java.util.List;
-import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
@@ -61,18 +61,11 @@ public class DiceRollerServiceTest {
 	@Test
 	public void testRemoveLowestRoll() throws Exception {
 		DiceRollerService diceRoller = DiceRollerServiceFactory.createDiceRoller();
-		List<Integer> rolls = diceRoller.rollDice(1, DiceFaceCount.FourSidedDice, false);
-		
-		int lowestRoll = this.getLowestRoll(rolls);
-		
-		// incase multiple instances of the lowest number exist, verify count after removal
-		// is one less than before the removal
-		int lowestRollCount = this.countIf(rolls, x -> x == lowestRoll);
+		List<Integer> rolls = Arrays.asList(13, 12, 18, 9, 10);
 		
 		rolls = diceRoller.removeLowestRoll(rolls);
-		int lowestRollCountAfterRemovingRoll = this.countIf(rolls, x -> x == lowestRoll);
 		
-		assertTrue(lowestRollCount == (lowestRollCountAfterRemovingRoll + 1),
+		assertTrue(!rolls.stream().anyMatch(x -> x == 9),
 				"Lowest roll was not removed from the dice rolls");
 	}
 	
@@ -88,11 +81,12 @@ public class DiceRollerServiceTest {
 	public void testNegativeNumberOfDiceRoll() {
 		DiceRollerService diceRoller = DiceRollerServiceFactory.createDiceRoller();
 		
-		assertThrows(Exception.class, () -> {
-			List<Integer> rolls = diceRoller.rollDice(-1, DiceFaceCount.FourSidedDice, false);
-		}, 
-		"dice roller did not throw exception when number of dice rolled was negative.");
-		
+		assertThrows(
+				Exception.class, 
+				() -> {
+					diceRoller.rollDice(-1, DiceFaceCount.FourSidedDice, false);
+				}, 
+				"dice roller did not throw exception when number of dice rolled was negative.");
 	}
 	
 	@Test
@@ -110,20 +104,6 @@ public class DiceRollerServiceTest {
 		List<Integer> rolls = diceRoller.rollPercentileDice();
 		
 		assertTrue(rolls.size() == 2);
-	}
-	
-	private int getLowestRoll(List<Integer> rolls) {
-		return rolls
-				.stream()
-				.min((x, y) -> x.compareTo(y))
-				.get();
-	}
-	
-	private int countIf(List<Integer> rolls, Predicate<? super Integer> predicate) {
-		return (int)rolls
-		.stream()
-		.filter(predicate)
-		.count();
 	}
 
 }

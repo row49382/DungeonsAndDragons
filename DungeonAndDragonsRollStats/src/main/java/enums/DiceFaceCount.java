@@ -10,7 +10,7 @@ public enum DiceFaceCount {
 	private int faceCount;
 	
 	private DiceFaceCount(int faceCount) {
-		this.faceCount = faceCount;
+	    this.faceCount = faceCount;
 	}
 	
 	public int getFaceCount() {

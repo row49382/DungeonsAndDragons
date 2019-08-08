@@ -17,6 +17,7 @@ public class Player {
 	private final String characterName;
 	private int startingLevel;
 	private final Map<String, Integer> abilityStats;
+	private final Map<String, Integer> proficiencies;
 	
 	public CharacterClass getCharacterClass() {
 		return this.characterClass;
@@ -50,6 +51,10 @@ public class Player {
 		return this.abilityStats;
 	}
 	
+	public Map<String, Integer> getProficiencies() {
+		return this.proficiencies;
+	}
+	
 	private Player(
 			CharacterClass characterClass, 
 			CharacterRace characterRace,
@@ -58,7 +63,8 @@ public class Player {
 			String playerName,
 			String characterName,
 			int startingLevel,
-			Map<String, Integer> abilityStats) {
+			Map<String, Integer> abilityStats,
+			Map<String, Integer> proficiencies) {
 		this.characterClass = characterClass;
 		this.characterRace = characterRace;
 		this.characterSubRace = characterSubRace;
@@ -67,6 +73,7 @@ public class Player {
 		this.characterName = characterName;
 		this.startingLevel = startingLevel;
 		this.abilityStats = abilityStats;
+		this.proficiencies = proficiencies;
 	}
 	
 	public static class PlayerBuilder {
@@ -78,6 +85,7 @@ public class Player {
 		private String characterName;
 		private int startingLevel;
 		private Map<String, Integer> abilityStats;
+		private Map<String, Integer> proficiencies;
 		
 		public CharacterClass getCharacterClass() {
 			return this.characterClass;
@@ -151,8 +159,22 @@ public class Player {
 			return this;
 		}
 		
+		public PlayerBuilder setProficiencies(Map<String, Integer> proficiencies) {
+			this.proficiencies = proficiencies;
+			return this;
+		}
+		
 		public Player build() {
-			return new Player(characterClass, characterRace, characterSubClass, characterSubRace, playerName, characterName, startingLevel, abilityStats);
+			return new Player(
+					characterClass, 
+					characterRace, 
+					characterSubClass, 
+					characterSubRace, 
+					playerName, 
+					characterName, 
+					startingLevel, 
+					abilityStats, 
+					proficiencies);
 		}
 	}
 	
@@ -173,6 +195,13 @@ public class Player {
 		for (Entry<String, Integer> abilityKeySet: this.getAbilityStats().entrySet()) {
 			s.append(String.format("%s = %d\n", abilityKeySet.getKey(), abilityKeySet.getValue()));
 		}
+		
+		/*
+		s.append("Proficiences: \n");
+		for (Entry<String, Integer> proficiencyKeySet: this.getProficiencies().entrySet()) {
+			s.append(String.format("%s = %d \n", proficiencyKeySet.getKey(), proficiencyKeySet.getValue()));
+		}
+		*/
 		
 		return s.toString();
 	}

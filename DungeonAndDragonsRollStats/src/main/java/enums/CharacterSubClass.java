@@ -112,5 +112,7 @@ public enum CharacterSubClass {
 	SchoolOfTransmutation,
 	Technomancy,
 	Theurgy,
-	WarMagic
+	WarMagic,
+	// default
+	Not_Applicable
 }

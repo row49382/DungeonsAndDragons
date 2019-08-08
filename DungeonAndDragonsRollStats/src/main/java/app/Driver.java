@@ -10,6 +10,7 @@ import java.util.Random;
 import java.util.Scanner;
 import java.util.stream.Collectors;
 
+import app.Invoker;
 import enums.Ability;
 import enums.CharacterClass;
 import enums.CharacterRace;
@@ -35,24 +36,30 @@ public class Driver {
 	private static final int STAT_ROLL_DICE_COUNT = 4;
 	private static final int ABILITY_COUNT = 6;
 	
-	public static void main(String[] args) throws Exception {
+	public static void main(String[] args) {
 		DiceRollerService diceRoller = new DiceRollerServiceImpl();
 		DiceSumService diceSummer = new DiceSumServiceImpl();
-		List<Integer> diceRollSums = getDiceRollSums(diceRoller, diceSummer);
-		
-		List<PlayerBuilderCommands> commandList = new ArrayList<>();
-		commandList.add(new PopulatePlayerName());
-		commandList.add(new PopulateCharacterName());
-		commandList.add(new PopulateStartingLevel());
-		commandList.add(new PopulateCharacterClass());
-		commandList.add(new PopulateCharacterSubClass());
-		commandList.add(new PopulateCharacterRace());
-		commandList.add(new PopulateCharacterSubRace());
-		commandList.add(new PopulateAbilityStats(diceRollSums));
-		
-		Invoker invoker = new Invoker(commandList, diceRollSums);
-		
-		invoker.start();
+
+		try {
+			List<Integer> diceRollSums = getDiceRollSums(diceRoller, diceSummer);
+
+			List<PlayerBuilderCommands> commandList = new ArrayList<>();
+			commandList.add(new PopulatePlayerName());
+			commandList.add(new PopulateCharacterName());
+			commandList.add(new PopulateStartingLevel());
+			commandList.add(new PopulateCharacterClass());
+			commandList.add(new PopulateCharacterSubClass());
+			commandList.add(new PopulateCharacterRace());
+			commandList.add(new PopulateCharacterSubRace());
+			commandList.add(new PopulateAbilityStats(diceRollSums));
+
+			Invoker invoker = new Invoker(commandList, diceRollSums);
+
+			invoker.start();
+		}
+		catch (Exception e) {
+			System.out.printf("Error on getting the initial dice rolls with message: %s. \n Stack trace: %s", e.getMessage(), e.getStackTrace());
+		}
 	}
 	
 	private static List<Integer> getDiceRollSums( 
