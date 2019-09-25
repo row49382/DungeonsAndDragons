@@ -119,10 +119,20 @@ public enum CharacterClass {
 	private List<CharacterSubClass> subClasses;
 	
 	private CharacterClass(List<CharacterSubClass> subClasses) {
-		this.subClasses = subClasses;
+	    this.subClasses = subClasses;
 	}
 	
 	public List<CharacterSubClass> getSubClasses() {
 		return this.subClasses;
+	}
+	
+	public static String listValues() {
+		String s = "";
+		
+		for (CharacterClass charClass: values()) {
+			s += String.format("- %s \n", charClass);
+		}
+		
+		return s;
 	}
 }

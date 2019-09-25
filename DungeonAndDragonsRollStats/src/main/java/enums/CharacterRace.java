@@ -1,7 +1,10 @@
 package enums;
 
+import java.util.AbstractMap;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public enum CharacterRace {
 	Dragonborn(Arrays.asList()),
@@ -84,12 +87,45 @@ public enum CharacterRace {
 	Goliath(Arrays.asList());
 	
 	private List<CharacterSubRace> subRaces;
+	private Map<Ability, Integer> abilityScoreIncreases;
 	
 	private CharacterRace(List<CharacterSubRace> subRaces) {
 		this.subRaces = subRaces;
 	}
 	
 	public List<CharacterSubRace> getSubRaces() {
-		return this.subRaces;
+	    return this.subRaces;
+	}
+	
+	public Map<Ability, Integer> getAbilityScoreIncreases() {
+		return this.abilityScoreIncreases;
+	}
+
+    /**
+     * Setups the ability score increases that will be applied
+     * based on proficiency/expertise
+     * 
+     * Still need to design means for implementation
+     * @param abilityScoreIncreases
+     * @return 
+     */
+	private static Map<Ability, Integer> setupAbilityScoreIncreases(List<AbstractMap.SimpleEntry<Ability, Integer>> abilityScoreIncreases) {
+		Map<Ability, Integer> map = new HashMap<>();
+		
+		for (Map.Entry<Ability, Integer> entry: abilityScoreIncreases) {
+			map.put(entry.getKey(), entry.getValue());
+		}
+		
+		return map;
+	}
+	
+	public static String listValues() {
+		String s = "";
+		
+		for (CharacterRace charRace: values()) {
+			s += String.format("- %s \n", charRace);
+		}
+		
+		return s;
 	}
 }

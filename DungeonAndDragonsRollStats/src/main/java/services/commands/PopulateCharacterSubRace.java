@@ -3,6 +3,7 @@ package services.commands;
 import java.util.Arrays;
 import java.util.Scanner;
 
+import enums.CharacterRace;
 import enums.CharacterSubRace;
 import models.Player.PlayerBuilder;
 
@@ -12,15 +13,25 @@ public class PopulateCharacterSubRace implements PlayerBuilderCommands {
 	public PlayerBuilder setItem(PlayerBuilder playerBuilder, Scanner scanner) {
 		
 		if (playerBuilder.getCharacterRace().getSubRaces().isEmpty()) {
-			return playerBuilder;
+			return playerBuilder.setCharacterSubRace(CharacterSubRace.Not_Applicable);
 		}
 		
-		System.out.println(String.format("For race %s here are the valid sub races", playerBuilder.getCharacterRace()));
+		this.printCharacterSubRacePrompt(playerBuilder);
+		
+		CharacterSubRace charSubRace = this.selectCharacterSubRace(scanner, playerBuilder.getCharacterRace());
+		
+		return playerBuilder.setCharacterSubRace(charSubRace);
+	}
+	
+	private void printCharacterSubRacePrompt(PlayerBuilder playerBuilder) {
+		System.out.println(String.format("For race %s here are the valid sub races:", playerBuilder.getCharacterRace()));
 
 		for (CharacterSubRace subRace: playerBuilder.getCharacterRace().getSubRaces()) {
 			System.out.printf("- %s \n", subRace.toString());
 		}
-
+	}
+	
+	private CharacterSubRace selectCharacterSubRace(Scanner scanner, CharacterRace characterRace) {
 		CharacterSubRace charSubRace = null;
 
 		while (charSubRace == null) {
@@ -33,11 +44,10 @@ public class PopulateCharacterSubRace implements PlayerBuilderCommands {
 				charSubRace = CharacterSubRace.valueOf(charSubRaceString);
 			}
 			else {
-				System.out.printf("Invalid character sub race for race %s, please try again...\n", playerBuilder.getCharacterRace());
+				System.out.printf("Invalid character sub race for race %s, please try again...\n", characterRace);
 			}
 		}
 		
-		return playerBuilder.setCharacterSubRace(charSubRace);
+		return charSubRace;
 	}
-
 }

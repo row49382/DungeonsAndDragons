@@ -27,7 +27,7 @@ public class PopulateAbilityStats implements PlayerBuilderCommands {
 		while (emptyMapAbilityStats.entrySet().size() > 0) {
 
 			if (emptyMapAbilityStats.size() == 1) {
-				int lastDiceRoll = diceRollSums.get(0);
+				int lastDiceRoll = this.diceRollSums.get(0);
 				String lastAbility = emptyMapAbilityStats.keySet().stream().findFirst().get();
 				
 				this.populateLastValueSilently(statMap, lastAbility, lastDiceRoll);
@@ -36,44 +36,20 @@ public class PopulateAbilityStats implements PlayerBuilderCommands {
 				continue;
 			}
 			
-			System.out.println("Enter the ability you want to add a value to");
-			System.out.println("The following abilities without values are:");
-
-			for (String ability: emptyMapAbilityStats.keySet()) {
-				System.out.printf("- %s\n", ability);
-			}
-			
-			System.out.print("Enter one of the abilities above: ");
+			this.printAddAbilityPrompt(emptyMapAbilityStats);
 
 			String abilityOption = scanner.next();
 
 			if (statMap.keySet().stream().anyMatch(x -> x.equalsIgnoreCase(abilityOption))) {
-				System.out.printf("Enter value for ability %s \n", abilityOption);
-				System.out.println("The remaining values are:");
+				this.printAddAbilityValuePrompt(abilityOption);
+			
+				int diceRoll = this.selectDiceRoll(scanner);
 				
-				for (int sumRoll: diceRollSums) {
-					System.out.printf("- %s\n", sumRoll);
-				}
-				
-				System.out.print("Enter one of the values above: ");
-
-				int diceRoll = -1;
-
-				while (diceRoll == -1) {
-					try {
-						diceRoll = scanner.nextInt();
-						scanner.nextLine();
-					}
-					catch (InputMismatchException ime) {
-						System.out.println("Value entered wasn't an integer, please try again.");
-					}
-				}
-
 				final int checkRoll = diceRoll;
-				if (diceRollSums.stream().anyMatch(x -> x == checkRoll)) {
+				if (this.diceRollSums.stream().anyMatch(x -> x == checkRoll)) {
 					statMap.put(abilityOption, diceRoll);
 
-					diceRollSums.remove(diceRollSums.indexOf(diceRoll));
+					this.diceRollSums.remove(this.diceRollSums.indexOf(diceRoll));
 					emptyMapAbilityStats = getEmptyMapEntries(statMap);
 				}
 				else {
@@ -111,5 +87,43 @@ public class PopulateAbilityStats implements PlayerBuilderCommands {
 	private Map<String, Integer> populateLastValueSilently(Map<String, Integer> statMap, String lastAbilityKey, int lastDiceRoll) {
 		statMap.put(lastAbilityKey, lastDiceRoll);
 		return statMap;
+	}
+
+	private void printAddAbilityPrompt(Map<String, Integer> emptyMapAbilityStats) {
+		System.out.println("Enter the ability you want to add a value to");
+		System.out.println("The following abilities without values are:");
+
+		for (String ability: emptyMapAbilityStats.keySet()) {
+			System.out.printf("- %s\n", ability);
+		}
+
+		System.out.print("Enter one of the abilities above: ");
+	}
+
+	private void printAddAbilityValuePrompt(String abilityOption) {
+        System.out.printf("Enter value for ability %s \n", abilityOption);
+        System.out.println("The remaining values are:");
+
+        for (int sumRoll: diceRollSums) {
+            System.out.printf("- %s\n", sumRoll);
+        }
+
+        System.out.print("Enter one of the values above: ");
+    }
+	
+	private int selectDiceRoll(Scanner scanner) {
+		int diceRoll = -1;
+
+		while (diceRoll == -1) {
+			try {
+				diceRoll = scanner.nextInt();
+				scanner.nextLine();
+			}
+			catch (InputMismatchException ime) {
+				System.out.println("Value entered wasn't an integer, please try again.");
+			}
+		}
+		
+		return diceRoll;
 	}
 }
